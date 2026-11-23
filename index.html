@@ -139,6 +139,44 @@ const GOOD_MP4 = "https://www.w3schools" + ".com/html/mov_bbb.mp4";
 vids.forEach(x => { if (!x.url.includes("mov_bbb")) x.url = GOOD_MP4; }); loadV(vids.at(0));
 document.querySelector('footer').innerHTML += '<div style="margin-top:6px;font-weight:700;color:#0f172a">👁️ कुल दर्शक: <span id="md-vc">1</span></div>';
 fetch('https://counterapi.dev').then(r=>r.json()).then(d=>{document.getElementById('md-vc').textContent=d.count});
+  
+// --- M Drishti Global Cloud Sync (Firebase Realtime Database) ---
+const FB_URL = "https://m-drishti-default" + "://firebaseio.com";
+
+async function syncFromCloud() {
+    try {
+        const res = await fetch(FB_URL);
+        const data = await res.json();
+        if (data && Array.isArray(data) && data.length > 0) {
+            vids = data;
+            save();
+            renderGrid();
+            loadV(vids.at(0));
+        } else {
+            pushToCloud();
+        }
+    } catch (e) {}
+}
+
+async function pushToCloud() {
+    try {
+        await fetch(FB_URL, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(vids)
+        });
+    } catch (e) {}
+}
+
+const origSave = save;
+save = function() {
+    origSave();
+    pushToCloud();
+};
+
+syncFromCloud();
+ 
+
  
 </script>
 </body>
