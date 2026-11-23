@@ -137,8 +137,9 @@ loadV(cur);renderGrid();
   
 const GOOD_MP4 = "https://www.w3schools" + ".com/html/mov_bbb.mp4";
 vids.forEach(x => { if (!x.url.includes("mov_bbb")) x.url = GOOD_MP4; }); loadV(vids.at(0));
+document.querySelector('footer').innerHTML += '<div style="margin-top:6px;font-weight:700;color:#0f172a">👁️ कुल दर्शक: <span id="md-vc">1</span></div>';
+fetch('https://counterapi.dev').then(r=>r.json()).then(d=>{document.getElementById('md-vc').textContent=d.count});
  
-
 </script>
 </body>
 </html>
