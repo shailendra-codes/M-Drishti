@@ -177,6 +177,22 @@ save = function() {
 syncFromCloud();
  
 
+// --- एडमिन वीडियो डिलीट फ़ीचर (Admin Delete Button) ---
+const actBar = document.querySelector('.actions');
+if (actBar) {
+    actBar.innerHTML += '<button class="action-btn" style="background:#fee2e2;color:#b91c1c;border-color:#fca5a5" onclick="adminDel()">🗑️ डिलीट</button>';
+}
+function adminDel() {
+    const pin = prompt("वीडियो हटाने के लिए एडमिन PIN डालें:");
+    if (pin !== "1234") return alert("गलत PIN! केवल संस्थापक ही वीडियो हटा सकते हैं।");
+    if (vids.length <= 1) return alert("कम से कम एक वीडियो रहना ज़रूरी है!");
+    vids = vids.filter(x => x.id !== cur.id);
+    save();
+    renderGrid();
+    loadV(vids.at(0));
+    alert("वीडियो हमेशा के लिए हटा दिया गया!");
+}
+ 
  
 </script>
 </body>
