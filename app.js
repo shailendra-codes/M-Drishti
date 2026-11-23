@@ -1,3 +1,4 @@
+
 // --- M Drishti Core Engine (app.js) ---
 
 const defaultVideos = [
@@ -51,13 +52,14 @@ const defaultVideos = [
 ];
 
 let videos = JSON.parse(localStorage.getItem("mdrishti_videos")) || defaultVideos;
+if (!Array.isArray(videos) || videos.length === 0) {
+    videos = defaultVideos;
+}
 let currentVideo = videos[0];
 let activeCategory = "all";
 let subscribedChannels = JSON.parse(localStorage.getItem("mdrishti_subs")) || {};
 
-// YouTube या सामान्य MP4 लिंक को सही Embed फॉर्मेट में बदलें
 function formatVideoUrl(rawUrl) {
-  function formatVideoUrl(rawUrl) {
     if (!rawUrl) return "";
     if (rawUrl.includes("://youtube.com")) {
         const vidId = rawUrl.split("v=")[1].split("&")[0];
@@ -70,17 +72,17 @@ function formatVideoUrl(rawUrl) {
     return rawUrl;
 }
 
-// मुख्य प्लेयर में वीडियो लोड करें
 function loadVideo(video) {
+    if (!video) return;
     currentVideo = video;
-    video.views += 1;
+    video.views = (video.views || 0) + 1;
     saveData();
 
     const playerContainer = document.getElementById("playerContainer");
     const formattedUrl = formatVideoUrl(video.url);
 
     if (formattedUrl.endsWith(".mp4") || formattedUrl.endsWith(".webm")) {
-        playerContainer.innerHTML = `<video controls autoplay src="${formattedUrl}"></video>`;
+        playerContainer.innerHTML = `<video controls src="${formattedUrl}"></video>`;
     } else {
         playerContainer.innerHTML = `<iframe src="${formattedUrl}" allowfullscreen></iframe>`;
     }
@@ -98,7 +100,6 @@ function loadVideo(video) {
 
     updateSubButton();
     renderComments();
-    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function updateSubButton() {
@@ -116,7 +117,7 @@ function toggleSubscribe() {
     if (subscribedChannels[currentVideo.channel]) {
         delete subscribedChannels[currentVideo.channel];
         currentVideo.subs -= 1;
-      } else {
+    } else {
         subscribedChannels[currentVideo.channel] = true;
         currentVideo.subs += 1;
     }
@@ -172,7 +173,7 @@ function renderGrid() {
     });
 
     grid.innerHTML = filtered.map(v => `
-      <div class="video-card" onclick='loadVideoById("${v.id}")'>
+        <div class="video-card" onclick='loadVideoById("${v.id}")'>
             <div class="thumb">
                 <span>▶️ ${v.title.substring(0, 48)}...</span>
                 <div class="badge">${v.views} Views</div>
@@ -187,7 +188,10 @@ function renderGrid() {
 
 function loadVideoById(id) {
     const found = videos.find(v => v.id === id);
-    if (found) loadVideo(found);
+    if (found) {
+        loadVideo(found);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
 }
 
 function setCategory(cat, btn) {
@@ -252,6 +256,6 @@ function saveData() {
     localStorage.setItem("mdrishti_videos", JSON.stringify(videos));
 }
 
-// पेज खुलते ही पहला वीडियो चलाएं और ग्रिड दिखाएं
 loadVideo(currentVideo);
 renderGrid();
+ 
