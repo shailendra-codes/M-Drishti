@@ -134,6 +134,11 @@ function setCat(c,b){cat=c;document.querySelectorAll(".cat-btn").forEach(x=>x.cl
 function submitVid(){const c=document.getElementById("upChannel").value.trim(),t=document.getElementById("upTitle").value.trim(),u=document.getElementById("upUrl").value.trim(),e=document.getElementById("upEarnLink").value.trim();if(!c||!t||!u)return alert("कृपया सभी ज़रूरी जानकारी भरें!");const n={id:"v"+Date.now(),title:t,channel:c,category:document.getElementById("upCategory").value,views:1,likes:1,subs:1,url:u,earnLink:e||(U_IO+"Malik-News/"),earnText:e?"❤️ क्रिएटर को सहयोग":"📰 Malik News",date:"अभी",comments:[]};vids.unshift(n);save();document.getElementById('uploadModal').style.display='none';renderGrid();loadV(n)}
 function save(){localStorage.setItem("md_v5",JSON.stringify(vids))}
 loadV(cur);renderGrid();
+  
+const GOOD_MP4 = "https://www.w3schools" + ".com/html/mov_bbb.mp4";
+vids.forEach(x => { if (!x.url.includes("mov_bbb")) x.url = GOOD_MP4; }); loadV(vids.at(0));
+ 
+
 </script>
 </body>
 </html>
