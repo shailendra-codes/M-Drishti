@@ -55,18 +55,18 @@ let videos = JSON.parse(localStorage.getItem("mdrishti_videos")) || defaultVideo
 if (!Array.isArray(videos) || videos.length === 0) {
     videos = defaultVideos;
 }
-let currentVideo = videos[0];
+let currentVideo = videos.at(0);
 let activeCategory = "all";
 let subscribedChannels = JSON.parse(localStorage.getItem("mdrishti_subs")) || {};
 
 function formatVideoUrl(rawUrl) {
     if (!rawUrl) return "";
     if (rawUrl.includes("://youtube.com")) {
-        const vidId = rawUrl.split("v=")[1].split("&")[0];
+        const vidId = rawUrl.split("v=").at(1).split("&").at(0);
         return "https://youtube.com" + vidId;
     }
     if (rawUrl.includes("youtu.be/")) {
-        const vidId = rawUrl.split("youtu.be/")[1].split("?")[0];
+        const vidId = rawUrl.split("youtu.be/").at(1).split("?").at(0);
         return "https://youtube.com" + vidId;
     }
     return rawUrl;
