@@ -111,17 +111,19 @@ footer{text-align:center;padding:18px;color:#64748b;font-size:0.82rem;margin-top
 </div>
 <footer>© 2026 M Drishti (Malik Ecosystem) • संस्थापक: शैलेन्द्र कुमार सिंह</footer>
 <script>
-const defVids=[
-{id:"v1",title:"MalikLang पाठ 1: बिना अंग्रेजी अपनी भाषा Hinglish में कोडिंग सीखें",channel:"MalikLang Official",category:"coding",views:425,likes:72,subs:145,url:"https://youtube.com",earnLink:"https://github.com",earnText:"🚀 MalikLang फ्री डाउनलोड करें",date:"आज",comments:["अमित: गांव के छात्रों के लिए शानदार पहल!"]},
-{id:"v2",title:"Malik News बुलेटिन: भारत-नेपाल रेल सेवा एवं आज के मुख्य समाचार",channel:"Malik News डेस्क",category:"news",views:318,likes:51,subs:212,url:"https://youtube.com",earnLink:"https://github.io",earnText:"📰 Malik News पर पूरा अंक पढ़ें",date:"आज",comments:[]},
-{id:"v3",title:"MalikBooks मंच: हिंदी और हिंग्लिश लेखक अपनी किताब मुफ्त पब्लिश करें",channel:"MalikBooks प्रकाशन",category:"education",views:198,likes:36,subs:99,url:"https://youtube.com",earnLink:"https://github.io",earnText:"📚 MalikBooks पर जाएं",date:"कल",comments:[]}
+const U_GH = "https://github.com" + "shailendra-codes/";
+const U_IO = "https://shailendra-codes" + ".github.io/";
+const defVids = [
+  {id:"v1", title:"MalikLang पाठ 1: बिना अंग्रेजी अपनी भाषा Hinglish में कोडिंग सीखें", channel:"MalikLang Official", category:"coding", views:425, likes:72, subs:145, url:"https://w3schools.com", earnLink: U_GH + "Maliklang", earnText:"🚀 MalikLang फ्री डाउनलोड करें", date:"आज", comments:["अमित: गांव के छात्रों के लिए शानदार पहल!"]},
+  {id:"v2", title:"Malik News बुलेटिन: भारत-नेपाल रेल सेवा एवं आज के मुख्य समाचार", channel:"Malik News डेस्क", category:"news", views:318, likes:51, subs:212, url:"https://w3schools.com", earnLink: U_IO + "Malik-News/", earnText:"📰 Malik News पर पूरा अंक पढ़ें", date:"आज", comments:[]},
+  {id:"v3", title:"MalikBooks मंच: हिंदी और हिंग्लिश लेखक अपनी किताब मुफ्त पब्लिश करें", channel:"MalikBooks प्रकाशन", category:"education", views:198, likes:36, subs:99, url:"https://w3schools.com", earnLink: U_IO + "MalikBooks/", earnText:"📚 MalikBooks पर जाएं", date:"कल", comments:[]}
 ];
-let vids=JSON.parse(localStorage.getItem("md_v4"))||defVids;
-let cur=vids.at(0),cat="all",subs=JSON.parse(localStorage.getItem("md_s4"))||{};
+let vids = JSON.parse(localStorage.getItem("md_v5")) || defVids;
+let cur = vids.at(0), cat = "all", subs = JSON.parse(localStorage.getItem("md_s5")) || {};
 function fmtUrl(u){if(u.includes("v="))return"https://youtube.com"+u.split("v=").at(1).split("&").at(0);if(u.includes("youtu.be/"))return"https://youtube.com"+u.split("youtu.be/").at(1).split("?").at(0);return u}
-function loadV(v){cur=v;v.views++;save();const u=fmtUrl(v.url);document.getElementById("playerContainer").innerHTML=u.endsWith(".mp4")?`<video controls src="${u}"></video>`:`<iframe src="${u}" allowfullscreen></iframe>`;document.getElementById("currentTitle").textContent=v.title;document.getElementById("currentMeta").textContent=v.views+" Views • "+v.date;document.getElementById("channelName").textContent=v.channel;document.getElementById("channelAvatar").textContent=v.channel.at(0);document.getElementById("subCount").textContent=v.subs;document.getElementById("likeCount").textContent=v.likes;const b=document.getElementById("creatorSupportLink");b.href=v.earnLink;b.textContent=v.earnText;updSub();renComm()}
+function loadV(v){cur=v;v.views++;save();const u=fmtUrl(v.url);document.getElementById("playerContainer").innerHTML=u.endsWith(".mp4")?`<video controls src="${u}"></video>`:`<iframe src="${u}" allowfullscreen></iframe>`;document.getElementById("currentTitle").textContent=v.title;document.getElementById("currentMeta").textContent=v.views+" Views • "+v.date;document.getElementById("channelName").textContent=v.channel;document.getElementById("channelAvatar").textContent=v.channel.at(0);document.getElementById("subCount").textContent=v.subs;document.getElementById("likeCount").textContent=v.likes;const b=document.getElementById("creatorSupportLink");b.href=v.earnLink;b.textContent=v.earnText;document.querySelector(".platform-ad-btn").href=U_IO+"Malik-News/";updSub();renComm()}
 function updSub(){const b=document.getElementById("subBtn");b.textContent=subs[cur.channel]?"Subscribed ✓":"Subscribe";b.className=subs[cur.channel]?"sub-btn subscribed":"sub-btn"}
-function toggleSub(){subs[cur.channel]?(delete subs[cur.channel],cur.subs--):(subs[cur.channel]=1,cur.subs++);localStorage.setItem("md_s4",JSON.stringify(subs));document.getElementById("subCount").textContent=cur.subs;updSub();save()}
+function toggleSub(){subs[cur.channel]?(delete subs[cur.channel],cur.subs--):(subs[cur.channel]=1,cur.subs++);localStorage.setItem("md_s5",JSON.stringify(subs));document.getElementById("subCount").textContent=cur.subs;updSub();save()}
 function likeVid(){cur.likes++;document.getElementById("likeCount").textContent=cur.likes;save()}
 function shareVid(){navigator.clipboard.writeText(cur.title+" - "+location.href);alert("लिंक कॉपी हो गया!")}
 function renComm(){document.getElementById("commentList").innerHTML=cur.comments.length?cur.comments.map(c=>`<div class="comment-item">${c}</div>`).join(""):"<div style='font-size:0.82rem;color:#64748b'>अभी कोई टिप्पणी नहीं है।</div>"}
@@ -129,13 +131,10 @@ function addComm(){const i=document.getElementById("commentInput");if(!i.value.t
 function renderGrid(){const q=document.getElementById("searchInput").value.toLowerCase();document.getElementById("videoGrid").innerHTML=vids.filter(v=>(cat==="all"||v.category===cat)&&(v.title.toLowerCase().includes(q)||v.channel.toLowerCase().includes(q))).map(v=>`<div class="video-card" onclick="pickV('${v.id}')"><div class="thumb"><span>▶️ ${v.title.slice(0,45)}...</span><div class="badge">${v.views} Views</div></div><div class="card-body"><div class="card-title">${v.title}</div><div class="card-meta">${v.channel} • ${v.likes} Likes</div></div></div>`).join("")}
 function pickV(id){const f=vids.find(x=>x.id===id);if(f){loadV(f);scrollTo({top:0,behavior:"smooth"})}}
 function setCat(c,b){cat=c;document.querySelectorAll(".cat-btn").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderGrid()}
-function submitVid(){const c=document.getElementById("upChannel").value.trim(),t=document.getElementById("upTitle").value.trim(),u=document.getElementById("upUrl").value.trim(),e=document.getElementById("upEarnLink").value.trim();if(!c||!t||!u)return alert("कृपया सभी ज़रूरी जानकारी भरें!");const n={id:"v"+Date.now(),title:t,channel:c,category:document.getElementById("upCategory").value,views:1,likes:1,subs:1,url:u,earnLink:e||"https://github.io",earnText:e?"❤️ क्रिएटर को सहयोग":"📰 Malik News",date:"अभी",comments:[]};vids.unshift(n);save();document.getElementById('uploadModal').style.display='none';renderGrid();loadV(n)}
-function save(){localStorage.setItem("md_v4",JSON.stringify(vids))}
+function submitVid(){const c=document.getElementById("upChannel").value.trim(),t=document.getElementById("upTitle").value.trim(),u=document.getElementById("upUrl").value.trim(),e=document.getElementById("upEarnLink").value.trim();if(!c||!t||!u)return alert("कृपया सभी ज़रूरी जानकारी भरें!");const n={id:"v"+Date.now(),title:t,channel:c,category:document.getElementById("upCategory").value,views:1,likes:1,subs:1,url:u,earnLink:e||(U_IO+"Malik-News/"),earnText:e?"❤️ क्रिएटर को सहयोग":"📰 Malik News",date:"अभी",comments:[]};vids.unshift(n);save();document.getElementById('uploadModal').style.display='none';renderGrid();loadV(n)}
+function save(){localStorage.setItem("md_v5",JSON.stringify(vids))}
 loadV(cur);renderGrid();
 </script>
 </body>
 </html>
- 
- 
- 
  
