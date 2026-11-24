@@ -201,6 +201,19 @@ document.querySelector('header').insertAdjacentHTML('afterend','<div style="back
 document.querySelector('header').insertAdjacentHTML('beforeend','<button class="action-btn" style="background:#38bdf8;color:#0f172a;border:0;font-weight:800" onclick="alert(\'📲 मोबाइल ऐप इंस्टॉल करने के लिए:\\n1. ऊपर दाईं ओर ब्राउज़र के 3 डॉट्स (⋮) पर टैप करें\\n2. Add to Home screen या Install App चुनें\\n3. M Drishti आपके फोन में ऐप बनकर आ जाएगा!\')">📲 ऐप इंस्टॉल करें</button>');
  
 </script>
+  
+<script>
+setInterval(() => {
+  document.querySelectorAll('iframe').forEach(f => {
+    if (f.src && f.src.includes('://youtube.com') && !f.src.includes('controls=1')) {
+      const sep = f.src.includes('?') ? '&' : '?';
+      f.src = f.src + sep + 'controls=1&rel=0&modestbranding=1';
+    }
+  });
+}, 1000);
+</script>
+ 
+
 </body>
 </html>
  
