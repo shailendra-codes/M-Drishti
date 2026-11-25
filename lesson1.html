@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MalikLang पाठ #1: Hinglish से Python की पहली सीढ़ी | M Drishti</title>
+  <style>
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+    body { margin: 0; background: #0f172a; color: #f8fafc; display: flex; flex-direction: column; min-height: 100vh; }
+    header { background: #1e293b; padding: 14px 20px; border-bottom: 2px solid #f59e0b; display: flex; justify-content: space-between; align-items: center; }
+    .badge { background: #dc2626; color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; }
+    main { flex: 1; max-width: 820px; width: 100%; margin: 20px auto; padding: 0 16px; }
+    .slide-box { background: #1e293b; border: 1px solid #334155; border-radius: 14px; padding: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+    h1 { font-size: 1.35rem; color: #fbbf24; margin: 0 0 12px 0; }
+    p { font-size: 1.05rem; line-height: 1.7; color: #e2e8f0; }
+    .code-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+    @media (max-width: 600px) { .code-grid { grid-template-columns: 1fr; } }
+    .card { background: #020617; border: 1px solid #334155; border-radius: 10px; padding: 14px; }
+    .card h3 { margin: 0 0 8px 0; font-size: 0.9rem; color: #38bdf8; }
+    pre { margin: 0; color: #4ade80; font-size: 0.98rem; white-space: pre-wrap; font-family: monospace; }
+    .controls { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    button { padding: 10px 18px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.95rem; }
+    .btn-play { background: #16a34a; color: #fff; }
+    .btn-next { background: #2563eb; color: #fff; }
+    .btn-prev { background: #475569; color: #fff; }
+    .progress { height: 6px; background: #334155; border-radius: 4px; margin-bottom: 16px; overflow: hidden; }
+    .bar { height: 100%; background: #f59e0b; width: 25%; transition: width 0.4s; }
+  </style>
+</head>
+<body>
+  <header>
+    <div><strong>👁️ M Drishti पाठशाला</strong> • <span style="color:#fbbf24;">MalikLang v3</span></div>
+    <span class="badge" id="stepLabel">स्लाइड 1 / 4</span>
+  </header>
+
+  <main>
+    <div class="progress"><div class="bar" id="progBar"></div></div>
+    <div class="slide-box">
+      <h1 id="title"></h1>
+      <p id="desc"></p>
+      <div class="code-grid">
+        <div class="card">
+          <h3>🇮🇳 MalikLang (Hinglish कोड)</h3>
+          <pre id="mlCode"></pre>
+        </div>
+        <div class="card">
+          <h3>🐍 असली Python आउटपुट</h3>
+          <pre id="pyCode"></pre>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="btn-prev" onclick="prevSlide()">⬅️ पिछला</button>
+        <button class="btn-play" onclick="speakSlide()">🔊 बोलकर सुनाएं (AI आवाज़)</button>
+        <button class="btn-next" onclick="nextSlide()">अगला पाठ ➡️</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const slides = [
+      {
+        title: "पाठ 1.1: MalikLang क्या है और यह क्यों खास है?",
+        desc: "नमस्ते छात्रों! MalikLang भारत की अपनी स्वदेशी Hinglish प्रोग्रामिंग भाषा है, जिसे शैलेंद्र कुमार सिंह जी ने बनाया है। इसके ज़रिए आप अपनी रोज़मर्रा की बोलचाल की भाषा में सीधे Python कोडिंग सीख सकते हैं।",
+        ml: '// अपना पहला प्रोग्राम लिखें\nlikho "Namaste Bharat!"\nlikho "Swagat hai M Drishti par"',
+        py: '# Python रूपांतरण:\nprint("Namaste Bharat!")\nprint("Swagat hai M Drishti par")\n\n# आउटपुट:\nNamaste Bharat!\nSwagat hai M Drishti par'
+      },
+      {
+        title: "पाठ 1.2: वेरिएबल (Variable) और गणित करना",
+        desc: "MalikLang में किसी भी संख्या या नाम को सहेजना बहुत आसान है। आप सीधे 'rakho' या सामान्य नाम लिखकर जोड़-घटाना कर सकते हैं।",
+        ml: 'rakho a = 25\nrakho b = 75\nrakho kul = a + b\nlikho "Kul Yog:", kul',
+        py: 'a = 25\nb = 75\nkul = a + b\nprint("Kul Yog:", kul)\n\n# आउटपुट:\nKul Yog: 100'
+      },
+      {
+        title: "पाठ 1.3: शर्त लगाना (Agar - Warna / If - Else)",
+        desc: "कंप्यूटर को निर्णय लेना सिखाने के लिए हम 'agar' और 'warna' का उपयोग करते हैं, जो बिल्कुल Python के if और else की तरह काम करता है।",
+        ml: 'rakho ank = 85\nagar ank >= 33:\n    likho "Badhai ho! Aap Pass hain"\nwarna:\n    likho "Fir se prayas karein"',
+        py: 'ank = 85\nif ank >= 33:\n    print("Badhai ho! Aap Pass hain")\nelse:\n    print("Fir se prayas karein")\n\n# आउटपुट:\nBadhai ho! Aap Pass hain'
+      },
+      {
+        title: "पाठ 1.4: अभ्यास प्रश्न और पुस्तक लिंक",
+        desc: "शाबाश! आपने MalikLang का पहला पाठ पूरा कर लिया है। अब आप अपनी खुद की दो संख्याओं का गुणा करने का कोड लिखें। पूरी पुस्तक 'MalikLang v1: Hinglish to Python' Amazon Kindle पर उपलब्ध है।",
+        ml: '// अभ्यास कार्य:\nrakho x = 12\nrakho y = 10\nlikho "Guna:", x * y',
+        py: 'x = 12\ny = 10\nprint("Guna:", x * y)\n\n# आउटपुट:\nGuna: 120'
+      }
+    ];
+
+    let idx = 0;
+    function render() {
+      const s = slides[idx];
+      document.getElementById('title').textContent = s.title;
+      document.getElementById('desc').textContent = s.desc;
+      document.getElementById('mlCode').textContent = s.ml;
+      document.getElementById('pyCode').textContent = s.py;
+      document.getElementById('stepLabel').textContent = `स्लाइड ${idx + 1} / ${slides.length}`;
+      document.getElementById('progBar').style.width = `${((idx + 1) / slides.length) * 100}%`;
+    }
+    function speakSlide() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(slides[idx].title + ". " + slides[idx].desc);
+        u.lang = 'hi-IN';
+        u.rate = 0.95;
+        window.speechSynthesis.speak(u);
+      }
+    }
+    function nextSlide() { if (idx < slides.length - 1) { idx++; render(); speakSlide(); } }
+    function prevSlide() { if (idx > 0) { idx--; render(); speakSlide(); } }
+    render();
+  </script>
+</body>
+</html>
+ 
